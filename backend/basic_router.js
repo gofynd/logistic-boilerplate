@@ -1,3 +1,9 @@
+/**
+ * This module sets up an Express router with various endpoints for handling logistics and file operations.
+ * It interacts with a partner client to perform operations such as fetching courier partner schemes, creating schemes,
+ * uploading files, and updating shipment statuses.
+ */
+
 const express = require('express');
 const basicRouter = express.Router();
 const fdkExtension = require("./fdk");
@@ -5,6 +11,16 @@ const { uploadFileToStorage } = require('./utils');
 const path = require('path');
 const { organizationId } = require('./constant');
 
+/**
+ * GET /test_basic_route
+ * Fetches courier partner schemes for the specified organization.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with courier partner schemes.
+ * @throws {Error} 404 error if fetching fails.
+ */
 basicRouter.get('/test_basic_route', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient(organizationId);
@@ -20,6 +36,16 @@ basicRouter.get('/test_basic_route', async function view(req, res, next) {
     }
 });
 
+/**
+ * POST /scheme
+ * Creates a new courier partner scheme.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with the created scheme details.
+ * @throws {Error} 404 error if creation fails.
+ */
 basicRouter.post('/scheme', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
@@ -78,6 +104,16 @@ basicRouter.post('/scheme', async function view(req, res, next) {
     }
 });
 
+/**
+ * GET /countries
+ * Retrieves a list of countries available for logistics operations.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with the list of countries.
+ * @throws {Error} 404 error if fetching fails.
+ */
 basicRouter.get('/countries', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
@@ -95,6 +131,16 @@ basicRouter.get('/countries', async function view(req, res, next) {
     }
 });
 
+/**
+ * GET /sample_serv_file
+ * Fetches a sample serviceability file for logistics operations.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with the sample file details.
+ * @throws {Error} 404 error if fetching fails.
+ */
 basicRouter.get('/sample_serv_file', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
@@ -115,6 +161,16 @@ basicRouter.get('/sample_serv_file', async function view(req, res, next) {
     }
 });
 
+/**
+ * GET /sample_tat_file
+ * Fetches a sample TAT (Turnaround Time) file for logistics operations.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with the sample file details.
+ * @throws {Error} 404 error if fetching fails.
+ */
 basicRouter.get('/sample_tat_file', async function view(req, res, next) {
     try {
         const response = await partnerClient.logistics.sampleFileServiceability({
@@ -134,6 +190,16 @@ basicRouter.get('/sample_tat_file', async function view(req, res, next) {
     }
 });
 
+/**
+ * GET /sample_serv_tat_file_status
+ * Retrieves the status of a sample serviceability or TAT file.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with the file status.
+ * @throws {Error} 404 error if fetching fails.
+ */
 basicRouter.get('/sample_serv_tat_file_status', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
@@ -150,6 +216,16 @@ basicRouter.get('/sample_serv_tat_file_status', async function view(req, res, ne
     }
 });
 
+/**
+ * POST /start_and_complete_upload_servicability
+ * Initiates and completes the upload of a serviceability file.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with the upload completion details.
+ * @throws {Error} 404 error if upload fails.
+ */
 basicRouter.post('/start_and_complete_upload_servicability', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
@@ -207,6 +283,16 @@ basicRouter.post('/start_and_complete_upload_servicability', async function view
     }
 });
 
+/**
+ * POST /start_and_complete_upload_tat
+ * Initiates and completes the upload of a TAT file.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with the upload completion details.
+ * @throws {Error} 404 error if upload fails.
+ */
 basicRouter.post('/start_and_complete_upload_tat', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
@@ -264,6 +350,16 @@ basicRouter.post('/start_and_complete_upload_tat', async function view(req, res,
     }
 });
 
+/**
+ * POST /upload_scheme_servicability
+ * Uploads a serviceability scheme file.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with the upload details.
+ * @throws {Error} 404 error if upload fails.
+ */
 basicRouter.post('/upload_scheme_servicability', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
@@ -287,6 +383,16 @@ basicRouter.post('/upload_scheme_servicability', async function view(req, res, n
     }
 });
 
+/**
+ * POST /upload_scheme_tat
+ * Uploads a TAT scheme file.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with the upload details.
+ * @throws {Error} 404 error if upload fails.
+ */
 basicRouter.post('/upload_scheme_tat', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
@@ -310,6 +416,16 @@ basicRouter.post('/upload_scheme_tat', async function view(req, res, next) {
     }
 });
 
+/**
+ * GET /scheme_serviceability_history
+ * Retrieves the history of serviceability scheme uploads.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with the history details.
+ * @throws {Error} 404 error if fetching fails.
+ */
 basicRouter.get('/scheme_serviceability_history', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
@@ -334,6 +450,16 @@ basicRouter.get('/scheme_serviceability_history', async function view(req, res, 
     }
 });
 
+/**
+ * GET /scheme_tat_history
+ * Retrieves the history of TAT scheme uploads.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with the history details.
+ * @throws {Error} 404 error if fetching fails.
+ */
 basicRouter.get('/scheme_tat_history', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
@@ -358,6 +484,16 @@ basicRouter.get('/scheme_tat_history', async function view(req, res, next) {
     }
 });
 
+/**
+ * POST /create_seller_account
+ * Creates a new seller account for a courier partner.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with the account creation details.
+ * @throws {Error} 404 error if creation fails.
+ */
 basicRouter.post('/create_seller_account', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
@@ -382,6 +518,16 @@ basicRouter.post('/create_seller_account', async function view(req, res, next) {
     }
 });
 
+/**
+ * POST /update_shipment_status
+ * Updates the status of a shipment.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with the update details.
+ * @throws {Error} 404 error if update fails.
+ */
 basicRouter.post('/update_shipment_status', async function view(req, res, next) {
     try {
         const platformClient = await fdkExtension.getPlatformClient(9294);
@@ -501,7 +647,16 @@ basicRouter.post('/update_shipment_status', async function view(req, res, next) 
     }
 });
 
-
+/**
+ * POST /update_shipment_tracking
+ * Updates the tracking information of a shipment.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Object} JSON response with the tracking update details.
+ * @throws {Error} 404 error if update fails.
+ */
 basicRouter.post('/update_shipment_tracking', async function view(req, res, next) {
     try {
         const platformClient = await fdkExtension.getPlatformClient(9294);
