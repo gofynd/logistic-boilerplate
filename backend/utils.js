@@ -1,29 +1,6 @@
 const axios = require("axios");
 const fs = require("fs");
 
-const sendWhatsAppMessage = async (number, text) => {
-    try {
-        const response = await fetch('https://graph.facebook.com/v20.0/<number>/messages', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${process.env.WHATSAPP_COMMERCE_MESSENGER_TOKEN}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                messaging_product: 'whatsapp',
-                to: number,
-                type: "text",
-                text: { body: text }
-            })
-        })
-        const data = await response.json()
-        console.log(data)
-    } catch (error) {
-        console.error('Error sending message:', error)
-    }
-}
-
-
 async function uploadFileToStorage(uploadUrl, filePath, mimeType) {
     try {
         // Read the file as a buffer
@@ -43,6 +20,5 @@ async function uploadFileToStorage(uploadUrl, filePath, mimeType) {
 }
 
 module.exports = {
-    sendWhatsAppMessage, 
     uploadFileToStorage
 };

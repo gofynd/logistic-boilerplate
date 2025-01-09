@@ -3,9 +3,7 @@ const partnerRouter = express.Router();
 const fdkExtension = require("./fdk");
 const { organizationId } = require('./constant');
 
-partnerRouter.get('/', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("partnerRouterr.get")
+partnerRouter.get('/test_partner_route', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
         const response = await partnerClient.logistics.getCourierPartnerAccounts({
@@ -17,11 +15,6 @@ partnerRouter.get('/', async function view(req, res, next) {
             "paymentMode": "value",
             "transportType": "value"
         });
-
-        // const platformClient = await fdkExtension.getPlatformClient(9294);
-        // let data = await platformClient.lead.getTickets();
-        // // Some business logic here
-        // res.json({ success: true });
         console.log(JSON.stringify(response))
         res.json({ success: true });
     } catch (err) {

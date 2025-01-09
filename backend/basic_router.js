@@ -5,9 +5,7 @@ const { uploadFileToStorage } = require('./utils');
 const path = require('path');
 const { organizationId } = require('./constant');
 
-basicRouter.get('/', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("basicRouterr.get")
+basicRouter.get('/test_basic_route', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient(organizationId);
         const response = await partnerClient.logistics.getCourierPartnerSchemes({
@@ -17,21 +15,20 @@ basicRouter.get('/', async function view(req, res, next) {
         res.json(response);
     } catch (err) {
         console.error(err);
+        console.log(JSON.stringify(err))
         res.status(404).json({ success: false });
     }
 });
 
 basicRouter.post('/scheme', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("basicRouterr.post.scheme")
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
         const response = await partnerClient.logistics.createCourierPartnerScheme({
             "organizationId": organizationId,
             "body": {
                 "extension_id": process.env.EXTENSION_API_KEY,
-                "scheme_id": "Scheme_id_4",
-                "name": "Scheme_name_4",
+                "scheme_id": "Scheme_id_5",
+                "name": "Scheme_name_5",
                 "weight": {
                     "lt": 10,
                     "gt": 1
@@ -82,8 +79,6 @@ basicRouter.post('/scheme', async function view(req, res, next) {
 });
 
 basicRouter.get('/countries', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("basicRouterr.get.countries")
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
         const response = await partnerClient.logistics.getCountries({
@@ -100,9 +95,7 @@ basicRouter.get('/countries', async function view(req, res, next) {
     }
 });
 
-basicRouter.get('/sample_serv_tat_file', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("basicRouterr.get.sample_serv_tat_file")
+basicRouter.get('/sample_serv_file', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
         const response = await partnerClient.logistics.sampleFileServiceability({
@@ -114,8 +107,17 @@ basicRouter.get('/sample_serv_tat_file', async function view(req, res, next) {
             }
         });
         console.log(JSON.stringify(response))
-        console.log("---------------------------------------------")
-        const response_tat = await partnerClient.logistics.sampleFileServiceability({
+        res.json(response);
+    } catch (err) {
+        console.error(err);
+        console.log(JSON.stringify(err))
+        res.status(404).json({ success: false });
+    }
+});
+
+basicRouter.get('/sample_tat_file', async function view(req, res, next) {
+    try {
+        const response = await partnerClient.logistics.sampleFileServiceability({
             "organizationId": organizationId,
             "body": {
                 "country": "INDIA",
@@ -123,8 +125,8 @@ basicRouter.get('/sample_serv_tat_file', async function view(req, res, next) {
                 "type": "tat"
             }
         });
-        console.log(response_tat)
-        res.json(response_tat);
+        console.log(JSON.stringify(response))
+        res.json(response);
     } catch (err) {
         console.error(err);
         console.log(JSON.stringify(err))
@@ -133,19 +135,11 @@ basicRouter.get('/sample_serv_tat_file', async function view(req, res, next) {
 });
 
 basicRouter.get('/sample_serv_tat_file_status', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("basicRouterr.get.sample_serv_tat_file_status")
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
-        // batch_id for servicability:
-        // batch_id for pincode: 674d953ce8850ed0d9dc82a4, 674ea5d6b5a6b6b1e4c8c689
-        // batch_id for state: 674d98cce24df6bf60ef2e3f
-        // batch_id for city: 674d98db2b5e4850a182ac24
-        // batch_id for tat:
-        // batch_id for pincode: 674edebd25db8c267fc6feab
         const response = await partnerClient.logistics.getSampleFileServiceabilityStatus({
             "organizationId": organizationId,
-            "batchId": "674edebd25db8c267fc6feab"
+            "batchId": "6761363a0456c5b5dcaa3b4a"
           });
         console.log(JSON.stringify(response))
         res.json(response);
@@ -157,8 +151,6 @@ basicRouter.get('/sample_serv_tat_file_status', async function view(req, res, ne
 });
 
 basicRouter.post('/start_and_complete_upload_servicability', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("basicRouterr.post.start_and_complete_upload_servicability")
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
         const response = await partnerClient.fileStorage.startUpload({
@@ -185,6 +177,7 @@ basicRouter.post('/start_and_complete_upload_servicability', async function view
         const mimeType = "text/csv";
         console.log("---------------------------------------------")
         console.log(uploadUrl, filePath)
+        console.log("---------------------------------------------")
         await uploadFileToStorage(uploadUrl, filePath, mimeType);
 
         const response_complte = await partnerClient.fileStorage.completeUpload({
@@ -205,9 +198,7 @@ basicRouter.post('/start_and_complete_upload_servicability', async function view
                 "tags": response.tags
             }
         });
-        console.log("---------------------------------------------")
-        console.log(response_complte)
-
+        console.log(JSON.stringify(response_complte))
         res.json(response_complte);
     } catch (err) {
         console.error(err);
@@ -217,8 +208,6 @@ basicRouter.post('/start_and_complete_upload_servicability', async function view
 });
 
 basicRouter.post('/start_and_complete_upload_tat', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("basicRouterr.post.start_and_complete_upload_tat")
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
         const response = await partnerClient.fileStorage.startUpload({
@@ -245,6 +234,7 @@ basicRouter.post('/start_and_complete_upload_tat', async function view(req, res,
         const mimeType = "text/csv";
         console.log("---------------------------------------------")
         console.log(uploadUrl, filePath)
+        console.log("---------------------------------------------")
         await uploadFileToStorage(uploadUrl, filePath, mimeType);
 
         const response_complte = await partnerClient.fileStorage.completeUpload({
@@ -265,9 +255,7 @@ basicRouter.post('/start_and_complete_upload_tat', async function view(req, res,
                 "tags": response.tags
             }
         });
-        console.log("---------------------------------------------")
-        console.log(response_complte)
-
+        console.log(JSON.stringify(response_complte))
         res.json(response_complte);
     } catch (err) {
         console.error(err);
@@ -277,8 +265,6 @@ basicRouter.post('/start_and_complete_upload_tat', async function view(req, res,
 });
 
 basicRouter.post('/upload_scheme_servicability', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("basicRouterr.post.upload_scheme_servicability")
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
         const response = await partnerClient.logistics.bulkServiceability({
@@ -302,8 +288,6 @@ basicRouter.post('/upload_scheme_servicability', async function view(req, res, n
 });
 
 basicRouter.post('/upload_scheme_tat', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("basicRouterr.post.upload_scheme_tat")
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
         const response = await partnerClient.logistics.bulkTat({
@@ -327,21 +311,19 @@ basicRouter.post('/upload_scheme_tat', async function view(req, res, next) {
 });
 
 basicRouter.get('/scheme_servicability_history', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("basicRouterr.get.scheme_servicability_history")
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
         const response = await partnerClient.logistics.getBulkServiceability({
             "organizationId": organizationId,
             "extensionId": process.env.EXTENSION_API_KEY,
             "schemeId": "Scheme_id_3",
-            // "batchId": "674eda8262b934d3a7c31f22",
-            // "action": "import",
-            // "status": "processing",
-            // "country": "India",
-            // "region": "Pincode",
-            // "startDate": "2024-12-01T18:30:00Z",
-            // "endDate": "2024-12-04T18:30:00Z"
+            "batchId": "674eda8262b934d3a7c31f22",
+            "action": "import",
+            "status": "processing",
+            "country": "India",
+            "region": "Pincode",
+            "startDate": "2024-12-01T18:30:00Z",
+            "endDate": "2024-12-04T18:30:00Z"
         });
         console.log(JSON.stringify(response))
         res.json(response);
@@ -353,21 +335,19 @@ basicRouter.get('/scheme_servicability_history', async function view(req, res, n
 });
 
 basicRouter.get('/scheme_tat_history', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("basicRouterr.get.scheme_tat_history")
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
         const response = await partnerClient.logistics.getBulkTat({
             "organizationId": organizationId,
             "extensionId": process.env.EXTENSION_API_KEY,
             "schemeId": "Scheme_id_3",
-            // "batchId": "674eda8262b934d3a7c31f22",
-            // "action": "import",
-            // "status": "processing",
-            // "country": "India",
-            // "region": "Pincode",
-            // "startDate": "2024-12-01T18:30:00Z",
-            // "endDate": "2024-12-04T18:30:00Z"
+            "batchId": "674eda8262b934d3a7c31f22",
+            "action": "import",
+            "status": "processing",
+            "country": "India",
+            "region": "Pincode",
+            "startDate": "2024-12-01T18:30:00Z",
+            "endDate": "2024-12-04T18:30:00Z"
         });
         console.log(JSON.stringify(response))
         res.json(response);
@@ -379,8 +359,6 @@ basicRouter.get('/scheme_tat_history', async function view(req, res, next) {
 });
 
 basicRouter.post('/create_seller_account', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("basicRouterr.post.create_seller_account")
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
         const response = await partnerClient.logistics.createCourierPartnerAccount({
@@ -405,8 +383,6 @@ basicRouter.post('/create_seller_account', async function view(req, res, next) {
 });
 
 basicRouter.post('/update_shipment_status', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("basicRouterr.post.update_shipment_status")
     try {
         const platformClient = await fdkExtension.getPlatformClient(9294);
         const response = await platformClient.order.updateShipmentStatus({
@@ -527,8 +503,6 @@ basicRouter.post('/update_shipment_status', async function view(req, res, next) 
 
 
 basicRouter.post('/update_shipment_tracking', async function view(req, res, next) {
-    console.log("---------------------------------------------")
-    console.log("basicRouterr.post.update_shipment_tracking")
     try {
         const platformClient = await fdkExtension.getPlatformClient(9294);
         const response = await platformClient.order.updateShipmentTracking({

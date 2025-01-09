@@ -30,14 +30,6 @@ const fdkExtension = setupFdk({
         api_path: "/api/webhook-events",
         notification_email: "parasjain@gofynd.com",
         event_map: {
-            "company/product/delete": {
-                "handler": (eventName) => {  console.log(eventName)},
-                "version": '1'
-            },
-            'application/order/placed': {
-                handler: webhookHandler.orderPlacedNotification,
-                version: '1',
-            },
             'application/courier-partner/assign': {
                 handler: webhookHandler.courierPartnerAsign,
                 version: '1',
