@@ -310,7 +310,7 @@ basicRouter.post('/upload_scheme_tat', async function view(req, res, next) {
     }
 });
 
-basicRouter.get('/scheme_servicability_history', async function view(req, res, next) {
+basicRouter.get('/scheme_serviceability_history', async function view(req, res, next) {
     try {
         const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
         const response = await partnerClient.logistics.getBulkServiceability({
