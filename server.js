@@ -1,3 +1,26 @@
+/**
+ * This module sets up an Express application with various middleware and routes for handling
+ * API requests, static file serving, and webhook events. It configures the application based
+ * on the environment and integrates several routers for different API functionalities.
+ * 
+ * Middleware and Routes:
+ * - Cookie Parser: Parses cookies with a secret key for session management.
+ * - Body Parser: Parses JSON bodies with a size limit of 2mb.
+ * - Static File Serving: Serves static files from the React distribution directory.
+ * - FDK Extension Handler: Handles extension launch routes.
+ * - Webhook Events: Processes incoming webhook events and logs them.
+ * - API Routes: Includes platform, partner, and basic API routes.
+ * - React App Serving: Serves the React application for all other routes.
+ * 
+ * Environment Variables:
+ * - `NODE_ENV`: Determines the path for serving static files.
+ * 
+ * Exceptions:
+ * - Logs errors and returns a 500 status code if webhook processing fails.
+ * 
+ * @module app
+ */
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
