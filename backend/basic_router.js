@@ -433,13 +433,6 @@ basicRouter.get('/scheme_serviceability_history', async function view(req, res, 
             "organizationId": organizationId,
             "extensionId": process.env.EXTENSION_API_KEY,
             "schemeId": "Scheme_id_3",
-            "batchId": "674eda8262b934d3a7c31f22",
-            "action": "import",
-            "status": "processing",
-            "country": "India",
-            "region": "Pincode",
-            "startDate": "2024-12-01T18:30:00Z",
-            "endDate": "2024-12-04T18:30:00Z"
         });
         console.log(JSON.stringify(response))
         res.json(response);
