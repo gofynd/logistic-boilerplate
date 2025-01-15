@@ -502,6 +502,7 @@ basicRouter.post('/create_seller_account', async function view(req, res, next) {
               "is_own_account": true
             }
           });
+          
         console.log(JSON.stringify(response))
         res.json(response);
     } catch (err) {
