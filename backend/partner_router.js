@@ -26,7 +26,7 @@ const fdkExtension = require("./fdk");
  */
 partnerRouter.get('/test_partner_route', async function view(req, res, next) {
     try {
-        const platformClient = await fdkExtension.getplatformClient(1);
+        const platformClient = await fdkExtension.getPlatformClient(1);
         const response = await platformClient.serviceability.getCourierPartnerAccounts({
             "companyId": 1,
             "pageNo": 1,

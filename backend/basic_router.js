@@ -26,7 +26,7 @@ basicRouter.get('/test_basic_route', async function view(req, res, next) {
         const platformClient = await fdkExtension.getPlatformClient(companyId);
         const response = await platformClient.serviceability.getCourierPartnerSchemes({
             company_id: companyId,
-          });
+        });
         console.log(JSON.stringify(response))
         res.json(response);
     } catch (err) {
@@ -48,7 +48,7 @@ basicRouter.get('/test_basic_route', async function view(req, res, next) {
  */
 basicRouter.post('/scheme', async function view(req, res, next) {
     try {
-        const platformClient = await fdkExtension.getplatformClient(1);
+        const platformClient = await fdkExtension.getPlatformClient(1);
         const response = await platformClient.serviceability.createCourierPartnerScheme({
             "company_id": companyId,
             "body": {
@@ -116,7 +116,7 @@ basicRouter.post('/scheme', async function view(req, res, next) {
  */
 basicRouter.get('/countries', async function view(req, res, next) {
     try {
-        const platformClient = await fdkExtension.getplatformClient(1);
+        const platformClient = await fdkExtension.getPlatformClient(1);
         const response = await platformClient.serviceability.getCountries({
             "company_id": companyId,
             "onboarding": true,
@@ -143,7 +143,7 @@ basicRouter.get('/countries', async function view(req, res, next) {
  */
 basicRouter.get('/sample_serv_file', async function view(req, res, next) {
     try {
-        const platformClient = await fdkExtension.getplatformClient(1);
+        const platformClient = await fdkExtension.getPlatformClient(1);
         const response = await platformClient.serviceability.sampleFileServiceability({
             "company_id": companyId,
             "body": {
@@ -202,11 +202,11 @@ basicRouter.get('/sample_tat_file', async function view(req, res, next) {
  */
 basicRouter.get('/sample_serv_tat_file_status', async function view(req, res, next) {
     try {
-        const platformClient = await fdkExtension.getplatformClient(1);
+        const platformClient = await fdkExtension.getPlatformClient(1);
         const response = await platformClient.serviceability.getSampleFileServiceabilityStatus({
             "company_id": companyId,
             "batchId": "6761363a0456c5b5dcaa3b4a"
-          });
+        });
         console.log(JSON.stringify(response))
         res.json(response);
     } catch (err) {
@@ -228,7 +228,7 @@ basicRouter.get('/sample_serv_tat_file_status', async function view(req, res, ne
  */
 basicRouter.post('/start_and_complete_upload_servicability', async function view(req, res, next) {
     try {
-        const platformClient = await fdkExtension.getplatformClient(1);
+        const platformClient = await fdkExtension.getPlatformClient(1);
         const response = await platformClient.fileStorage.startUpload({
             "namespace": "test",
             "company_id": companyId,
@@ -295,7 +295,7 @@ basicRouter.post('/start_and_complete_upload_servicability', async function view
  */
 basicRouter.post('/start_and_complete_upload_tat', async function view(req, res, next) {
     try {
-        const platformClient = await fdkExtension.getplatformClient(1);
+        const platformClient = await fdkExtension.getPlatformClient(1);
         const response = await platformClient.fileStorage.startUpload({
             "namespace": "test",
             "company_id": companyId,
@@ -362,7 +362,7 @@ basicRouter.post('/start_and_complete_upload_tat', async function view(req, res,
  */
 basicRouter.post('/upload_scheme_servicability', async function view(req, res, next) {
     try {
-        const platformClient = await fdkExtension.getplatformClient(1);
+        const platformClient = await fdkExtension.getPlatformClient(1);
         const response = await platformClient.serviceability.bulkServiceability({
             "company_id": companyId,
             "extensionId": process.env.EXTENSION_API_KEY,
@@ -395,7 +395,7 @@ basicRouter.post('/upload_scheme_servicability', async function view(req, res, n
  */
 basicRouter.post('/upload_scheme_tat', async function view(req, res, next) {
     try {
-        const platformClient = await fdkExtension.getplatformClient(1);
+        const platformClient = await fdkExtension.getPlatformClient(1);
         const response = await platformClient.serviceability.bulkTat({
             "company_id": companyId,
             "extensionId": process.env.EXTENSION_API_KEY,
@@ -428,7 +428,7 @@ basicRouter.post('/upload_scheme_tat', async function view(req, res, next) {
  */
 basicRouter.get('/scheme_serviceability_history', async function view(req, res, next) {
     try {
-        const platformClient = await fdkExtension.getplatformClient(1);
+        const platformClient = await fdkExtension.getPlatformClient(1);
         const response = await platformClient.serviceability.getBulkServiceability({
             "company_id": companyId,
             "extensionId": process.env.EXTENSION_API_KEY,
@@ -455,7 +455,7 @@ basicRouter.get('/scheme_serviceability_history', async function view(req, res, 
  */
 basicRouter.get('/scheme_tat_history', async function view(req, res, next) {
     try {
-        const platformClient = await fdkExtension.getplatformClient(1);
+        const platformClient = await fdkExtension.getPlatformClient(1);
         const response = await platformClient.serviceability.getBulkTat({
             "company_id": companyId,
             "extensionId": process.env.EXTENSION_API_KEY,
@@ -489,20 +489,20 @@ basicRouter.get('/scheme_tat_history', async function view(req, res, next) {
  */
 basicRouter.post('/create_seller_account', async function view(req, res, next) {
     try {
-        const platformClient = await fdkExtension.getplatformClient(1);
+        const platformClient = await fdkExtension.getPlatformClient(1);
         const response = await platformClient.serviceability.createCourierPartnerAccount({
             "company_id": companyId,
             "companyId": 9294,
             "body": {
-              "extension_id": process.env.EXTENSION_API_KEY,
-              "account_id": "Scheme_id_3_company_id_9294",
-              "scheme_id": "Scheme_id_3",
-              "is_self_ship": false,
-              "stage": "enabled",
-              "is_own_account": true
+                "extension_id": process.env.EXTENSION_API_KEY,
+                "account_id": "Scheme_id_3_company_id_9294",
+                "scheme_id": "Scheme_id_3",
+                "is_self_ship": false,
+                "stage": "enabled",
+                "is_own_account": true
             }
-          });
-          
+        });
+
         console.log(JSON.stringify(response))
         res.json(response);
     } catch (err) {
@@ -533,105 +533,105 @@ basicRouter.post('/update_shipment_status', async function view(req, res, next) 
                 "unlock_before_transition": false,
                 "resume_tasks_after_unlock": false,
                 "statuses": [
-                  {
-                    "shipments": [
-                      {
-                        "identifier": "17334083479041568015",
-                        "products": [],
-                        "data_updates": {
-                          "entities": [
+                    {
+                        "shipments": [
                             {
-                              "filters": [],
-                              "data": {
-                                "meta": {
-                                  "courier_partner_extension_id": process.env.EXTENSION_API_KEY,
-                                  "courier_partner_scheme_id": "Scheme_id_3",
-                                  "sort_code": "1129",
-                                  "ewaybill_info": {
-                                    "success": true
-                                  },
-                                  "waybill": [
-                                    "6806010004126"
-                                  ],
-                                  "tracking_url": "https://www.test.com/track/package/6806010004126",
-                                  "courier_partner_shipper_name": "Test",
-                                  "logistics_meta": {
-                                    "remark": "NAN"
-                                  },
-                                  "is_own_account": true,
-                                  "shipping_label_provided": false,
-                                  "estimated_delivery_date": null,
-                                  "promised_delivery_date": null,
-                                  "rider_details": {
-                                    "name": "Paras",
-                                    "phone": "+9967539854"
-                                  },
-                                  "label": "https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/documents/label/PDFs/17291005908611498449.pdf",
-                                  "courier_partner_name": "Test Partner Name"
-                                },
-                                "delivery_awb_number": "6806010004126",
-                                "pdf_links": {
-                                  "label": "https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/documents/label/PDFs/17291005908611498449.pdf"
+                                "identifier": "17334083479041568015",
+                                "products": [],
+                                "data_updates": {
+                                    "entities": [
+                                        {
+                                            "filters": [],
+                                            "data": {
+                                                "meta": {
+                                                    "courier_partner_extension_id": process.env.EXTENSION_API_KEY,
+                                                    "courier_partner_scheme_id": "Scheme_id_3",
+                                                    "sort_code": "1129",
+                                                    "ewaybill_info": {
+                                                        "success": true
+                                                    },
+                                                    "waybill": [
+                                                        "6806010004126"
+                                                    ],
+                                                    "tracking_url": "https://www.test.com/track/package/6806010004126",
+                                                    "courier_partner_shipper_name": "Test",
+                                                    "logistics_meta": {
+                                                        "remark": "NAN"
+                                                    },
+                                                    "is_own_account": true,
+                                                    "shipping_label_provided": false,
+                                                    "estimated_delivery_date": null,
+                                                    "promised_delivery_date": null,
+                                                    "rider_details": {
+                                                        "name": "Paras",
+                                                        "phone": "+9967539854"
+                                                    },
+                                                    "label": "https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/documents/label/PDFs/17291005908611498449.pdf",
+                                                    "courier_partner_name": "Test Partner Name"
+                                                },
+                                                "delivery_awb_number": "6806010004126",
+                                                "pdf_links": {
+                                                    "label": "https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/documents/label/PDFs/17291005908611498449.pdf"
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "products": [
+                                        {
+                                            "filters": [],
+                                            "data": {
+                                                "meta": {
+                                                    "courier_partner_extension_id": process.env.EXTENSION_API_KEY,
+                                                    "courier_partner_scheme_id": "Scheme_id_3",
+                                                    "sort_code": "1129",
+                                                    "ewaybill_info": {
+                                                        "success": true
+                                                    },
+                                                    "waybill": [
+                                                        "6806010004126"
+                                                    ],
+                                                    "tracking_url": "https://www.test.com/track/package/6806010004126",
+                                                    "courier_partner_shipper_name": "Test",
+                                                    "is_own_account": true,
+                                                    "estimated_delivery_date": null,
+                                                    "promised_delivery_date": null,
+                                                    "rider_details": {
+                                                        "name": "Paras",
+                                                        "phone": "+9967539854"
+                                                    },
+                                                    "label": "https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/documents/label/PDFs/17291005908611498449.pdf",
+                                                    "courier_partner_name": "Test Partner Name"
+                                                },
+                                                "delivery_awb_number": "6806010004126"
+                                            }
+                                        }
+                                    ],
+                                    "order_item_status": [
+                                        {
+                                            "filters": [],
+                                            "data": {
+                                                "meta": {
+                                                    "courier_partner_details": {
+                                                        "courier_partner_extension_id": process.env.EXTENSION_API_KEY,
+                                                        "courier_partner_scheme_id": "Scheme_id_3",
+                                                        "courier_partner_name": "Test Partner Name",
+                                                        "is_own_account": true,
+                                                        "courier_partner_shipper_name": "Test"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
                                 }
-                              }
                             }
-                          ],
-                          "products": [
-                            {
-                              "filters": [],
-                              "data": {
-                                "meta": {
-                                  "courier_partner_extension_id": process.env.EXTENSION_API_KEY,
-                                  "courier_partner_scheme_id": "Scheme_id_3",
-                                  "sort_code": "1129",
-                                  "ewaybill_info": {
-                                    "success": true
-                                  },
-                                  "waybill": [
-                                    "6806010004126"
-                                  ],
-                                  "tracking_url": "https://www.test.com/track/package/6806010004126",
-                                  "courier_partner_shipper_name": "Test",
-                                  "is_own_account": true,
-                                  "estimated_delivery_date": null,
-                                  "promised_delivery_date": null,
-                                  "rider_details": {
-                                    "name": "Paras",
-                                    "phone": "+9967539854"
-                                  },
-                                  "label": "https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/documents/label/PDFs/17291005908611498449.pdf",
-                                  "courier_partner_name": "Test Partner Name"
-                                },
-                                "delivery_awb_number": "6806010004126"
-                              }
-                            }
-                          ],
-                          "order_item_status": [
-                            {
-                              "filters": [],
-                              "data": {
-                                "meta": {
-                                  "courier_partner_details": {
-                                    "courier_partner_extension_id": process.env.EXTENSION_API_KEY,
-                                    "courier_partner_scheme_id": "Scheme_id_3",
-                                    "courier_partner_name": "Test Partner Name",
-                                    "is_own_account": true,
-                                    "courier_partner_shipper_name": "Test"
-                                  }
-                                }
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ],
-                    "status": "dp_assigned",
-                    "exclude_bags_next_state": "",
-                    "split_shipment": false
-                  }
+                        ],
+                        "status": "dp_assigned",
+                        "exclude_bags_next_state": "",
+                        "split_shipment": false
+                    }
                 ]
-              }
-            });
+            }
+        });
         console.log(JSON.stringify(response))
         res.json(response);
     } catch (err) {
