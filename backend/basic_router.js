@@ -9,7 +9,7 @@ const basicRouter = express.Router();
 const fdkExtension = require("./fdk");
 const { uploadFileToStorage } = require('./utils');
 const path = require('path');
-const { organizationId } = require('./constant');
+const { companyId } = require('./constant');
 
 /**
  * GET /test_basic_route
@@ -23,9 +23,9 @@ const { organizationId } = require('./constant');
  */
 basicRouter.get('/test_basic_route', async function view(req, res, next) {
     try {
-        const partnerClient = await fdkExtension.getPartnerClient(organizationId);
-        const response = await partnerClient.logistics.getCourierPartnerSchemes({
-            "organizationId": organizationId,
+        const platformClient = await fdkExtension.getPlatformClient(companyId);
+        const response = await platformClient.serviceability.getCourierPartnerSchemes({
+            company_id: companyId,
           });
         console.log(JSON.stringify(response))
         res.json(response);
@@ -48,9 +48,9 @@ basicRouter.get('/test_basic_route', async function view(req, res, next) {
  */
 basicRouter.post('/scheme', async function view(req, res, next) {
     try {
-        const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
-        const response = await partnerClient.logistics.createCourierPartnerScheme({
-            "organizationId": organizationId,
+        const platformClient = await fdkExtension.getplatformClient(1);
+        const response = await platformClient.serviceability.createCourierPartnerScheme({
+            "company_id": companyId,
             "body": {
                 "extension_id": process.env.EXTENSION_API_KEY,
                 "scheme_id": "Scheme_id_5",
@@ -116,9 +116,9 @@ basicRouter.post('/scheme', async function view(req, res, next) {
  */
 basicRouter.get('/countries', async function view(req, res, next) {
     try {
-        const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
-        const response = await partnerClient.logistics.getCountries({
-            "organizationId": organizationId,
+        const platformClient = await fdkExtension.getplatformClient(1);
+        const response = await platformClient.serviceability.getCountries({
+            "company_id": companyId,
             "onboarding": true,
             "q": "india"
         });
@@ -143,9 +143,9 @@ basicRouter.get('/countries', async function view(req, res, next) {
  */
 basicRouter.get('/sample_serv_file', async function view(req, res, next) {
     try {
-        const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
-        const response = await partnerClient.logistics.sampleFileServiceability({
-            "organizationId": organizationId,
+        const platformClient = await fdkExtension.getplatformClient(1);
+        const response = await platformClient.serviceability.sampleFileServiceability({
+            "company_id": companyId,
             "body": {
                 "country": "INDIA",
                 "region": "pincode",
@@ -173,8 +173,8 @@ basicRouter.get('/sample_serv_file', async function view(req, res, next) {
  */
 basicRouter.get('/sample_tat_file', async function view(req, res, next) {
     try {
-        const response = await partnerClient.logistics.sampleFileServiceability({
-            "organizationId": organizationId,
+        const response = await platformClient.serviceability.sampleFileServiceability({
+            "company_id": companyId,
             "body": {
                 "country": "INDIA",
                 "region": "city",
@@ -202,9 +202,9 @@ basicRouter.get('/sample_tat_file', async function view(req, res, next) {
  */
 basicRouter.get('/sample_serv_tat_file_status', async function view(req, res, next) {
     try {
-        const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
-        const response = await partnerClient.logistics.getSampleFileServiceabilityStatus({
-            "organizationId": organizationId,
+        const platformClient = await fdkExtension.getplatformClient(1);
+        const response = await platformClient.serviceability.getSampleFileServiceabilityStatus({
+            "company_id": companyId,
             "batchId": "6761363a0456c5b5dcaa3b4a"
           });
         console.log(JSON.stringify(response))
@@ -228,10 +228,10 @@ basicRouter.get('/sample_serv_tat_file_status', async function view(req, res, ne
  */
 basicRouter.post('/start_and_complete_upload_servicability', async function view(req, res, next) {
     try {
-        const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
-        const response = await partnerClient.fileStorage.startUpload({
+        const platformClient = await fdkExtension.getplatformClient(1);
+        const response = await platformClient.fileStorage.startUpload({
             "namespace": "test",
-            "organizationId": organizationId,
+            "company_id": companyId,
             "body": {
                 "file_name": "sample_serv_file.csv",
                 "content_type": "text/csv",
@@ -256,9 +256,9 @@ basicRouter.post('/start_and_complete_upload_servicability', async function view
         console.log("---------------------------------------------")
         await uploadFileToStorage(uploadUrl, filePath, mimeType);
 
-        const response_complte = await partnerClient.fileStorage.completeUpload({
+        const response_complte = await platformClient.fileStorage.completeUpload({
             "namespace": "test",
-            "organizationId": organizationId,
+            "company_id": companyId,
             "body": {
                 "file_name": response.file_name,
                 "file_path": response.file_path,
@@ -295,10 +295,10 @@ basicRouter.post('/start_and_complete_upload_servicability', async function view
  */
 basicRouter.post('/start_and_complete_upload_tat', async function view(req, res, next) {
     try {
-        const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
-        const response = await partnerClient.fileStorage.startUpload({
+        const platformClient = await fdkExtension.getplatformClient(1);
+        const response = await platformClient.fileStorage.startUpload({
             "namespace": "test",
-            "organizationId": organizationId,
+            "company_id": companyId,
             "body": {
                 "file_name": "sample_tat_file.csv",
                 "content_type": "text/csv",
@@ -323,9 +323,9 @@ basicRouter.post('/start_and_complete_upload_tat', async function view(req, res,
         console.log("---------------------------------------------")
         await uploadFileToStorage(uploadUrl, filePath, mimeType);
 
-        const response_complte = await partnerClient.fileStorage.completeUpload({
+        const response_complte = await platformClient.fileStorage.completeUpload({
             "namespace": "test",
-            "organizationId": organizationId,
+            "company_id": companyId,
             "body": {
                 "file_name": response.file_name,
                 "file_path": response.file_path,
@@ -362,9 +362,9 @@ basicRouter.post('/start_and_complete_upload_tat', async function view(req, res,
  */
 basicRouter.post('/upload_scheme_servicability', async function view(req, res, next) {
     try {
-        const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
-        const response = await partnerClient.logistics.bulkServiceability({
-            "organizationId": organizationId,
+        const platformClient = await fdkExtension.getplatformClient(1);
+        const response = await platformClient.serviceability.bulkServiceability({
+            "company_id": companyId,
             "extensionId": process.env.EXTENSION_API_KEY,
             "schemeId": "Scheme_id_3",
             "body": {
@@ -395,9 +395,9 @@ basicRouter.post('/upload_scheme_servicability', async function view(req, res, n
  */
 basicRouter.post('/upload_scheme_tat', async function view(req, res, next) {
     try {
-        const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
-        const response = await partnerClient.logistics.bulkTat({
-            "organizationId": organizationId,
+        const platformClient = await fdkExtension.getplatformClient(1);
+        const response = await platformClient.serviceability.bulkTat({
+            "company_id": companyId,
             "extensionId": process.env.EXTENSION_API_KEY,
             "schemeId": "Scheme_id_3",
             "body": {
@@ -428,9 +428,9 @@ basicRouter.post('/upload_scheme_tat', async function view(req, res, next) {
  */
 basicRouter.get('/scheme_serviceability_history', async function view(req, res, next) {
     try {
-        const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
-        const response = await partnerClient.logistics.getBulkServiceability({
-            "organizationId": organizationId,
+        const platformClient = await fdkExtension.getplatformClient(1);
+        const response = await platformClient.serviceability.getBulkServiceability({
+            "company_id": companyId,
             "extensionId": process.env.EXTENSION_API_KEY,
             "schemeId": "Scheme_id_3",
         });
@@ -455,9 +455,9 @@ basicRouter.get('/scheme_serviceability_history', async function view(req, res, 
  */
 basicRouter.get('/scheme_tat_history', async function view(req, res, next) {
     try {
-        const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
-        const response = await partnerClient.logistics.getBulkTat({
-            "organizationId": organizationId,
+        const platformClient = await fdkExtension.getplatformClient(1);
+        const response = await platformClient.serviceability.getBulkTat({
+            "company_id": companyId,
             "extensionId": process.env.EXTENSION_API_KEY,
             "schemeId": "Scheme_id_3",
             "batchId": "674eda8262b934d3a7c31f22",
@@ -489,9 +489,9 @@ basicRouter.get('/scheme_tat_history', async function view(req, res, next) {
  */
 basicRouter.post('/create_seller_account', async function view(req, res, next) {
     try {
-        const partnerClient = await fdkExtension.getPartnerClient('6720b51d25f94c22e87376a5');
-        const response = await partnerClient.logistics.createCourierPartnerAccount({
-            "organizationId": organizationId,
+        const platformClient = await fdkExtension.getplatformClient(1);
+        const response = await platformClient.serviceability.createCourierPartnerAccount({
+            "company_id": companyId,
             "companyId": 9294,
             "body": {
               "extension_id": process.env.EXTENSION_API_KEY,
